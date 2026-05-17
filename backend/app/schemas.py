@@ -19,3 +19,14 @@ class SignUpRequest(BaseModel):
         if len(value) < 6:
             raise ValueError("Password must be at least 6 characters long")
         return value
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+    @field_validator("password")
+    @classmethod
+    def login_password_not_empty(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("Password is required")
+        return value
