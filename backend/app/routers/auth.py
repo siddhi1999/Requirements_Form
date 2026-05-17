@@ -50,3 +50,49 @@ def signup(payload: SignUpRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+from app.schemas import SignUpRequest, LoginRequest
+
+@router.post("/login")
+def login(payload: LoginRequest):
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+
+        cur.execute(
+            """
+            SELECT id, username, email, password_hash, created_at
+            FROM auth.users
+            WHERE email = %s
+            """,
+            (payload.email,)
+        )
+
+        user = cur.fetchone()
+
+        cur.close()
+        conn.close()
+
+        if not user:
+            raise HTTPException(status_code=401, detail="Invalid email or password")
+
+        stored_hash = user[3]
+
+        if not bcrypt.checkpw(payload.password.encode("utf-8"), stored_hash.encode("utf-8")):
+            raise HTTPException(status_code=401, detail="Invalid email or password")
+
+        return {
+            "message": "Login successful",
+            "user": {
+                "id": user[0],
+                "username": user[1],
+                "email": user[2],
+                "created_at": str(user[4])
+            }
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
