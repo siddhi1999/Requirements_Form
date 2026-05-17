@@ -30,3 +30,26 @@ class LoginRequest(BaseModel):
         if not value.strip():
             raise ValueError("Password is required")
         return value
+
+from typing import Literal
+
+class RequirementCreateRequest(BaseModel):
+    title: str
+    description: str
+    status: Literal["open", "processed", "obsolete"] = "open"
+
+    @field_validator("title")
+    @classmethod
+    def title_not_empty(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("Title is required")
+        return value
+
+    @field_validator("description")
+    @classmethod
+    def description_not_empty(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("Description is required")
+        return value
