@@ -31,7 +31,9 @@ body {
   gap: 14px;
 }
 
-.form input {
+.form input,
+.form textarea,
+.form select {
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -70,4 +72,66 @@ body {
 .auth-link {
   margin-top: 16px;
   text-align: center;
+}
+
+.requirements-page {
+  padding: 40px;
+}
+
+.requirements-page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.requirements-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.requirements-section {
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.requirements-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.requirements-table th,
+.requirements-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.requirements-table th {
+  background-color: #f0f2f5;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.badge.open {
+  background-color: #f39c12;
+}
+
+.badge.processed {
+  background-color: #27ae60;
+}
+
+.badge.obsolete {
+  background-color: #7f8c8d;
 }
