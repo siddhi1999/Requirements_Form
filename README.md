@@ -39,15 +39,14 @@ Check first whether you already have these installed:
 - **PostgreSQL**
 - **Python 3**
 - **Node.js and npm**
-- **Git** (optional, but useful)
 
-### Check Python
+### Check Python on Command Prompt (cmd)
 
 ```bash
 python --version
 ```
 
-### Check Node.js and npm
+### Check Node.js and npm on cmd
 
 ```bash
 node -v
@@ -59,7 +58,6 @@ npm -v
 If PostgreSQL is installed, you may already have:
 
 - **pgAdmin 4**
-- **SQL Shell (psql)**
 
 ---
 
@@ -83,7 +81,7 @@ During installation:
 
 Download Python 3 from:
 
-[Python Downloads](https://www.python.org/downloads/)
+[Python Download](https://www.python.org/downloads/)
 
 Important during installation:
 
@@ -129,7 +127,7 @@ After creating the database:
 4. Open the file `schema.sql` from this project
 5. Copy all SQL from `schema.sql`
 6. Paste it into the Query Tool
-7. Run the script
+7. Click `Execute Script`
 
 If everything works, you should see these schemas in pgAdmin:
 
@@ -193,7 +191,7 @@ pip install fastapi uvicorn psycopg[binary] bcrypt python-dotenv email-validator
 
 ### Create the backend environment file
 
-Inside the `backend` folder, create a file named `.env` if it does not already exist.
+Inside the `backend` folder, create a file named `.env`.
 
 Add:
 
@@ -234,11 +232,6 @@ cd frontend
 
 ```bash
 npm install
-```
-
-If needed, install required packages manually:
-
-```bash
 npm install react-router-dom axios
 ```
 
@@ -342,19 +335,21 @@ Examples:
 - Invalid email format
 - Missing required fields
 
----
+### VS Code shows unresolved import errors
 
-## For Users Who Already Have Tools Installed
+If VS Code shows errors such as `Import "dotenv" could not be resolved` or `Import "psycopg" could not be resolved`, VS Code is probably using the wrong Python interpreter.
 
-If you already have PostgreSQL, Python, or Node.js installed, you usually only need to:
+**Fix:**
+1. Open VS Code.
+2. Press `Ctrl + Shift + P`.
+3. Select **Python: Select Interpreter**.
+4. Choose the interpreter from your backend virtual environment, usually:
 
-- Create the database
-- Run `schema.sql`
-- Install project dependencies
-- Create `.env`
-- Run backend and frontend
+```text
+backend\.venv\Scripts\python.exe
+```
 
-There is no need to reinstall software that is already working.
+This is usually an interpreter selection issue, not a code issue.
 
 ---
 
@@ -366,16 +361,3 @@ There is no need to reinstall software that is already working.
 - [x] Backend `.env` configured
 - [x] Backend server running
 - [x] Frontend server running
-
----
-
-## Notes
-
-This project was built as a full-stack exercise with:
-
-- User signup
-- User login
-- Protected frontend routing
-- Requirements listing
-- Requirements creation
-- PostgreSQL schema separation between authentication and application data
