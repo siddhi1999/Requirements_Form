@@ -74,7 +74,7 @@ def login(payload: LoginRequest):
         conn.close()
 
         if not user:
-            raise HTTPException(status_code=401, detail="Invalid email or password")
+            raise HTTPException(status_code=401, detail="Invalid email or password. If you are a new user, please sign up.")
 
         stored_hash = user[3]
 

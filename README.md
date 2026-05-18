@@ -40,13 +40,13 @@ Check first whether you already have these installed:
 - **Python 3**
 - **Node.js and npm**
 
-### Check Python on Command Prompt (cmd)
+### Check Python on Command Prompt
 
 ```bash
 python --version
 ```
 
-### Check Node.js and npm on cmd
+### Check Node.js and npm
 
 ```bash
 node -v
@@ -74,7 +74,8 @@ Download from the official website:
 During installation:
 
 - Keep the default port as `5432` unless another service is already using it
-- Remember the password you create for the `postgres` user
+- Remember the username and password you create for PostgreSQL
+- The default username is often `postgres`
 - Install **pgAdmin 4**
 
 ### 2. Install Python
@@ -95,6 +96,8 @@ Download Node.js from:
 
 Node.js includes **npm**, which is needed for the frontend.
 
+If `npm` does not work immediately after installing Node.js, close all open terminals and open a new one before checking again. This also applies to integrated terminals in editors like VS Code.
+
 ---
 
 ## Step 1: Create the Database
@@ -104,7 +107,7 @@ Open **pgAdmin 4**.
 Then:
 
 1. Expand **Servers**
-2. Connect to your local PostgreSQL server
+2. Connect to your local PostgreSQL server using the username and password you created during PostgreSQL installation
 3. Right-click **Databases**
 4. Choose **Create → Database**
 5. Set the database name to:
@@ -124,25 +127,47 @@ After creating the database:
 1. Click the database `requirements_form_db`
 2. Right-click it
 3. Open **Query Tool**
-4. Open the file `schema.sql` from this project
-5. Copy all SQL from `schema.sql`
-6. Paste it into the Query Tool
-7. Click `Execute Script`
+4. In the Query Tool, click the **Open File** icon
+5. Navigate to the root of the project folder and open `schema.sql`
+6. Make sure the SQL script is loaded into the Query Tool
+7. Run the script by clicking the **Execute Query** button (play icon) or pressing `F5`
 
-If everything works, you should see these schemas in pgAdmin:
+### Validate the schemas
+
+After the script runs, you can validate it either in the pgAdmin UI or by running this query:
+
+```sql
+SELECT schema_name
+FROM information_schema.schemata;
+```
+
+You should see these schemas:
 
 - `auth`
 - `app`
 - `public`
 
-And these tables:
+### Validate the tables
 
-- `auth.users`
-- `app.requirements`
+Run:
 
-**Note:** If the schema does not appear in pgAdmin, try refreshing the server tree.
+```sql
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_type = 'BASE TABLE'
+AND table_schema IN ('auth', 'app');
+```
 
-If it still does not reflect, go to:
+You should see something like:
+
+| table_schema | table_name |
+| --- | --- |
+| app | requirements |
+| auth | users |
+
+**Note:** If the schemas or tables do not appear in pgAdmin, try refreshing the server tree.
+
+If the schema browser still does not reflect correctly, go to:
 
 **File → Preferences → Miscellaneous → User Interface**
 
@@ -152,13 +177,13 @@ Then change **Layout** from **Workspace** to **Classic**.
 
 ## Step 3: Set Up the Backend
 
-Open a terminal in the project folder and go into the backend folder:
+Open a terminal in the project root, then go into the backend folder:
 
 ```bash
 cd backend
 ```
 
-### Create a virtual environment
+### Create and activate a virtual environment
 
 ```powershell
 python -m venv .venv
@@ -181,12 +206,6 @@ Then activate again:
 
 ```bash
 pip install -r requirements.txt
-```
-
-If `requirements.txt` is missing or outdated, install manually:
-
-```bash
-pip install fastapi uvicorn psycopg[binary] bcrypt python-dotenv email-validator
 ```
 
 ### Create the backend environment file
@@ -216,13 +235,15 @@ If the backend starts correctly, open:
 - [http://127.0.0.1:8000](http://127.0.0.1:8000)
 - [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-FastAPI automatically provides interactive API documentation at `/docs`.
+The `/docs` page opens FastAPI’s interactive Swagger UI, where you can view and test the available backend API endpoints directly from the browser.
 
 ---
 
 ## Step 4: Set Up the Frontend
 
-Open a new terminal and go into the frontend folder:
+Open a new terminal.
+
+First, make sure you are in the project root directory, then go into the frontend folder:
 
 ```bash
 cd frontend
@@ -296,12 +317,19 @@ Python may not be added to PATH.
 
 ### `npm` is not recognized
 
-Node.js may not be installed correctly.
+Even after installing Node.js from the official website, `npm` may not be available in terminals that were already open during installation.
 
 **Fix:**
 
-- Reinstall Node.js from the official website
-- Restart the terminal after installation
+- Close all open terminals
+- Reopen a new terminal
+- If you are using VS Code, also close and reopen the integrated terminal
+- Then check again:
+
+```bash
+node -v
+npm -v
+```
 
 ### PostgreSQL connection fails
 
@@ -339,10 +367,16 @@ Examples:
 
 If VS Code shows errors such as `Import "dotenv" could not be resolved` or `Import "psycopg" could not be resolved`, VS Code is probably using the wrong Python interpreter.
 
+This can happen when your system has both:
+
+- a global Python installation
+- a project virtual environment
+
 **Fix:**
-1. Open VS Code.
-2. Press `Ctrl + Shift + P`.
-3. Select **Python: Select Interpreter**.
+
+1. Open VS Code
+2. Press `Ctrl + Shift + P`
+3. Select **Python: Select Interpreter**
 4. Choose the interpreter from your backend virtual environment, usually:
 
 ```text
