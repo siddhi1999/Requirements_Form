@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+}
+
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-card {
+  background: white;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form input,
+.form textarea,
+.form select {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #1f6feb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form button:disabled {
+  background-color: #8fb4f5;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.error {
+  color: #c62828;
+}
+
+.success {
+  color: #2e7d32;
+}
+
+.auth-link {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.requirements-page {
+  padding: 40px;
+}
+
+.requirements-page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.requirements-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.requirements-section {
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.requirements-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.requirements-table th,
+.requirements-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.requirements-table th {
+  background-color: #f0f2f5;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.badge.open {
+  background-color: #f39c12;
+}
+
+.badge.processed {
+  background-color: #27ae60;
+}
+
+.badge.obsolete {
+  background-color: #7f8c8d;
+}
